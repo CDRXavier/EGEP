@@ -188,9 +188,10 @@ INT_PTR CALLBACK About(HWND hDlg, UINT message, WPARAM wParam, LPARAM lParam)
 #include <windows.h>
 //for the project to work
 #include "stdafx.h"
-//so what is THIS for?
+//function identifier
 LRESULT CALLBACK WindowProc(HWND hwnd, UINT uMsg, WPARAM wParam, LPARAM lParam);
-
+int main(HWND hwnd);
+void setup();
 //global variables
 int color = 6;
 int mouseX;
@@ -200,6 +201,8 @@ int coord[2];
 int key;
 bool keystate[8];
 HBRUSH brush;
+
+int time;
 //entry point function
 int WINAPI wWinMain(HINSTANCE hInstance, HINSTANCE, PWSTR pCmdLine, int nCmdShow)
 {
@@ -242,13 +245,11 @@ int WINAPI wWinMain(HINSTANCE hInstance, HINSTANCE, PWSTR pCmdLine, int nCmdShow
 	setup();
 	// Run the message loop.
 	MSG msg = {};
-	while (true) {
-		main();
-		while (GetMessage(&msg, NULL, 0, 0)) {
-			TranslateMessage(&msg);
-			DispatchMessage(&msg);
+	while (GetMessage(&msg, NULL, 0, 0)) {
+		main(hwnd);
+		TranslateMessage(&msg);
+		DispatchMessage(&msg);
 		}
-	}
 	return 0;
 }
 void setup() {
@@ -263,9 +264,38 @@ void setup() {
 	//set the textbox
 	//SetRect(textbox, 1,1,1,1);
 }
-void main()
+int main(HWND hwnd)
 {
+	//if (GetKeyState(0x57)) keystate[0] = true; //key "W"
+	//else keystate[0] = false;
+	//if (GetKeyState(0x41)) keystate[1] = true; //key "A"
+	//else keystate[1] = false;
+	//if (GetKeyState(0x53)) keystate[2] = true; //key "S"
+	//else keystate[2] = false;
+	//if (GetKeyState(0x44)) keystate[3] = true; //key "D"
+	//else keystate[3] = false;
+	
+	time = (int)GetTickCount();
+	if ((time % 1) == 0) {
+		//every 0.1 seconds
+		if (keystate[0] && coord[1] > 0) {
+			coord[1] = coord[1] - 1;
+			InvalidateRect(hwnd, &button, true);
+		}
+		if (keystate[2]) {
+			coord[1] = coord[1] + 1;
+			InvalidateRect(hwnd, &button, true);
+		}
+		if (keystate[1] && (coord[0] > 0)) {
+			coord[0] = coord[0] - 1;
+			InvalidateRect(hwnd, &button, true);
+		}
+		if (keystate[3]) {
 
+			coord[0] = coord[0] + 1;
+			InvalidateRect(hwnd, &button, true);
+		}
+	}
 }
 //the DispatchMessage function will call this function
 //the window procedure of the window that is the target of the message.
@@ -275,7 +305,6 @@ LRESULT CALLBACK WindowProc(HWND hwnd, UINT uMsg, WPARAM wParam, LPARAM lParam)
 //WPARAM and LPARAM are additional data to the message
 //LRESULT is a int value that's a "response" to the message
 {
-	timeGetSystemTime;
 	switch (uMsg) {
 	case WM_CLOSE:
 		if (MessageBox(hwnd, L"Really quit?", L"My application", MB_OKCANCEL) == IDOK)
@@ -293,15 +322,8 @@ LRESULT CALLBACK WindowProc(HWND hwnd, UINT uMsg, WPARAM wParam, LPARAM lParam)
 			  OnSize(hwnd, (UINT)wParam, width, height);
 
 		  }*/
+		//intentional fallthrough
 	case WM_PAINT:
-		if (keystate[0])
-			coord[1] = coord[1] + 1;
-		if (keystate[2])
-			coord[1] = coord[1] - 1;
-		if (keystate[1])
-			coord[0] = coord[0] + 1;
-		if (keystate[3])
-			coord[0] = coord[0] + 1;
 		SetRect(&button, coord[0], coord[1], 100 + coord[0], 80 + coord[1]);
 		{
 		//painting procedures
@@ -325,7 +347,8 @@ lprc LPRect structure that contains the rectangle (in logical coordinates) in wh
 format changes the method of formatting the text.
 */
 //TextOut(hdc, 0,0,L"", 15);
-//DrawTextA(hdc, "TEXT!!!", 10, &button, DT_CALCRECT);
+		if ((time % 10) == 0)
+			DrawTextA(hdc, "MOVE!!!", 6, &button, DT_CALCRECT);
 //TextOut(hdc, 0, 0, L"Hello, Windows!", 15);
 //TextOut(hdc, 20, 60, L"Click me! :)", 15);
 		EndPaint(hwnd, &ps);
@@ -344,6 +367,7 @@ format changes the method of formatting the text.
 		else
 			brush = CreateSolidBrush(RGB(100, 100, 100));
 		return 0;
+
 	case WM_LBUTTONDOWN:
 		//mouseX = LOWORD(lParam);
 		//GET_X_PARAM == ((int)(short)LOWORD(lParam));
@@ -365,7 +389,6 @@ format changes the method of formatting the text.
 		case 0x53: keystate[2] = true; break;
 		case 0x44: keystate[3] = true; break;
 		}
-		InvalidateRect(hwnd, &button, TRUE);
 		//GetKeyState('W');
 		//if (key & 0x57 == 0x57) keystate[0] = true; //key "W"
 		//if (key & 0x41 == 0x41) keystate[1] = true; //key "A"
@@ -379,7 +402,6 @@ format changes the method of formatting the text.
 		case 0x53: keystate[2] = false; break;
 		case 0x44: keystate[3] = false; break;
 		}
-		InvalidateRect(hwnd, &button, TRUE);
 		//key = ((int)(short)LOWORD(lParam));
 		//if (key & 0x57 == 0x57) keystate[0] = false; //key "W"
 		//if (key & 0x41 == 0x41) keystate[1] = false; //key "A"
