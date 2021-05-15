@@ -32,12 +32,5 @@ What I suggest you to do, is that you create a project (Windows Desktop Program 
 They you copy-paste the downloaded files into that place, because the other irrelevant stuff
 will have the right directory. (upon creation)
 
-If you are editing the '.rc' file, make sure you don't change stuff you are not supposed to change --- Visual Studio
-will have no idea why the are wrong, and it can't fix it for you. You have to open those files in a separate text editor.
-Wordpad recommended.
-
-YOU DO NOT NEED ANY RESOURCE FILE IF YOU RUN THE '.EXE' FILE, BECAUSE THE '.EXE' EXECUTABLE FILES ARE COMPILED.
-THEY ONLY NEED THE FILES COMING WITH YOUR WINDOWS INSTALLATION. IF THEY DO NOT WORK THEN ... TRY ANOTHER COMPUTER.
-NOTE: THE DEBUG VERSION NEED A FILE ONLY IF YOU INSTALLED VISUAL STUDIO (to debug) AND THEREFORE WILL NOT WORK ON ALL MACHINES
-THE RELEASE VERSION SHOULD (SHOULD) WORK ON ALL.
-
+If you are editing the '.rc' file, make sure you make the changes referenced elsewhere as well --- Visual Studio
+will not error-check the resource file, and it can't fix it for you if something goes wrong.
