@@ -8,7 +8,7 @@ Experimental Graphical Entertainment Program
 
 An attempt at making a independent program featuring basic graphics and animations.
 Avialiable for both the Arduboy platform and Windows.
-Supporting Windows 2000 Professional SP4 or later.
+Supporting Windows 7 or later.
 ____
 Instructions(and explainations):
 For VerArd (arduboy) version, things are pretty straightforward.
