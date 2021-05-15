@@ -19,9 +19,8 @@ First, download all of them:
 * The '.rc' files are the resource script files (which are also needed) because there are modified content
 that are different from the default resource scripts. Without those, the About box and the language of the
 application will not work
-* You will also need the '.ico' icon files, because that is how it works ... (yeah).
-* The 'targetver.h' is relatively unimportant, as it defined the platform the program can run on.
-(which is a non-issue because most Windows program runs on all windows platforms)
+* You will also need the '.ico' icon files.
+* The 'targetver.h' is relatively unimportant, as it defined the platform the program can run on. You might be able to get away without it.
 * The 'stdafx.h' is the default, so I did not include that.
 * The 'EGEP_Original.cpp' is the original (uncleaned) sourcecode file. It is functional identical to the
 'EGEP.cpp'.
