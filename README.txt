@@ -25,9 +25,6 @@ application will not work
 * The 'EGEP_Original.cpp' is the original (uncleaned) sourcecode file. It is functional identical to the
 'EGEP.cpp'.
 
-Why do I not include the entire Visual Studio Project?
-Because everything beside the source files (the ones I posted) have a cobweb of directories (especially the .sln)
-
 What I suggest you to do, is that you create a project (Windows Desktop Program type), called EGEP.
 They you copy-paste the downloaded files into that place, because the other irrelevant stuff
 will have the right directory. (upon creation)
